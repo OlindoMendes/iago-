@@ -1,6 +1,6 @@
 <template>
   <li>
-    <h3>Full Name</h3>
+    <h3>{{fullName}}</h3>
     <h4>$ 35,00</h4>
     <div>
       <base-badge v-for="area in areas" :key="area" :type="area" :title="area"></base-badge>

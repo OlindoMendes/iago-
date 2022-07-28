@@ -10,7 +10,7 @@
       <CoachItemVue
         v-for="coach in coaches"
         :key="coach.id"
-        id="coach.id"
+        :id="coach.id"
         :firstName="coach.firstName"
         :lastName="coach.lastName"
         :rate="coach.hourlyRate"

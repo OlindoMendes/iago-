@@ -12,7 +12,7 @@ export default {
     props: {
         mode: {
             type: String,
-            required: false.valueOf,
+            required: false,
             default: null
         },
         link: {
