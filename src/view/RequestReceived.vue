@@ -3,7 +3,7 @@
     <base-card>
       <header><h2>Requests Received</h2></header>
       <ul v-if="hasRequest">
-        <request-item v-for="request in receivedRequest" :key="request.id" :email="request.email" :message="request.message"></request-item>
+        <RequestItem v-for="request in receivedRequest" :key="request.id" :email="request.email" :message="request.message"/>
       </ul>
       <h3 v-else>You haven't received any Requests yet!</h3>
     </base-card>
