@@ -53,9 +53,9 @@ export default {
                 last: this.lastName,
                 description: this.description,
                 rate: this.rate,
-                area: this.areas
+                areas: this.areas
             }
-            console.log(formData)
+            this.$emit('save-data', formData)
         }
     }
 }

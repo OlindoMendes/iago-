@@ -4,7 +4,7 @@
       <base-card>
     <div class="controls">
       <base-button mode="outline">Refresh</base-button>
-      <base-button link to="/register">Register as Coach</base-button>
+      <base-button v-if="!coachVerify" link to="/register">Register as Coach</base-button>
     </div>
     <ul v-if="hasCoach">
       <CoachItemVue
@@ -49,6 +49,8 @@ export default {
     ...mapGetters({
       coaches: 'coaches/coachesGetter',
       checkCoach: 'coaches/hasCoaches',
+      isCoach: 'coaches/isCoach'
+      
     }),
     filteredCoaches() {
       const coach = this.coaches
@@ -61,6 +63,9 @@ export default {
     },
     hasCoach() {
       return this.checkCoach;
+    },
+    coachVerify() {
+      return this.isCoach;
     },
   },
 };
