@@ -12,7 +12,7 @@ export default {
      props:['email', 'message'],
      computed:{
         emailLink(){
-            return 'mail to:' + this.email
+            return 'mailto:' + this.email
         }
      }
 }
