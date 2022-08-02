@@ -18,6 +18,7 @@ export default {
       newCoach: 'coaches/registerCoachData',
     }),
     registerCoach(data) {
+      console.log(data)
       this.newCoach(data);
       this.$router.replace('/coaches');
     },

@@ -1,19 +1,18 @@
-import axios from 'axios';
+// import axios from 'axios';
 
 export default {
   async registerCoachData(context, data) {
-    console.log(data);
-    const userId = data.id;
+    const userId = context.rootGetters.getUserId
     const coachData = {
       firstName: data.first,
       lastName: data.last,
-      description: data.description,
-      rate: data.rate,
       areas: data.areas,
+      description: data.description,
+      hourlyRate: data.rate,
     };
 
-    const response = await axios(
-      `https://vue-api-study-8ac61-default-rtdb.firebaseio.com/coaches/${userId}.json`,
+    const response = await fetch(
+      `https://coach-app-92996-default-rtdb.firebaseio.com/coaches/${userId}.json`,
       {
         method: 'PUT',
         body: JSON.stringify(coachData),
@@ -30,8 +29,10 @@ export default {
       id: userId,
     });
   },
+
+
   async loadCoaches({ commit }) {
-    const response = axios(`https://vue-api-study-8ac61-default-rtdb.firebaseio.com/coaches.json`);
+    const response = await fetch('https://coach-app-92996-default-rtdb.firebaseio.com/coaches.json');
 
     const responseData = await response.json();
 

@@ -13,7 +13,7 @@ const store = createStore({
       userId:'c3'
     }
   },
-  getter:{
+  getters:{
     getUserId(state){
       return state.userId
     }
