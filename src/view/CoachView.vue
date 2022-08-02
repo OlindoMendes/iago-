@@ -1,24 +1,31 @@
 <template>
+<base-dialog :show="!!error" title="An error occurred!" @close="closeModel">
+<p>{{error}}</p></base-dialog>
   <section><coach-filter @change-filter="setFilter"></coach-filter></section>
   <section>
-      <base-card>
-    <div class="controls">
-      <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
-      <base-button v-if="!coachVerify" link to="/register">Register as Coach</base-button>
-    </div>
-    <ul v-if="hasCoach">
-      <CoachItemVue
-        v-for="coach in filteredCoaches"
-        :key="coach.id"
-        :id="coach.id"
-        :firstName="coach.firstName"
-        :lastName="coach.lastName"
-        :rate="coach.hourlyRate"
-        :areas="coach.areas"
-      />
-    </ul>
-    <h3 v-else>Not coaches registered yet</h3>
-      </base-card>
+    <base-card>
+      <div class="controls">
+        <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
+        <base-button v-if="!coachVerify && !isLoading" link to="/register"
+          >Register as Coach</base-button
+        >
+      </div>
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
+      </div>
+      <ul v-else-if="hasCoach">
+        <CoachItemVue
+          v-for="coach in filteredCoaches"
+          :key="coach.id"
+          :id="coach.id"
+          :firstName="coach.firstName"
+          :lastName="coach.lastName"
+          :rate="coach.hourlyRate"
+          :areas="coach.areas"
+        />
+      </ul>
+      <h3 v-else>Not coaches registered yet</h3>
+    </base-card>
   </section>
 </template>
 
@@ -33,22 +40,35 @@ export default {
   },
   data(){
    return {
+    isLoading: false,
+    error: null,
     activeFilter: {
       frontend: true,
       backend: true,
       career:true
     }
-   } 
+   }
   },
   methods:{
     ...mapActions({
       loadCoaches: 'coaches/loadCoaches'
     }),
+    closeModal(){
+      this.error = null
+    },
     setFilter(updatedFilters){
        this.activeFilter = updatedFilters
     },
-    loadCoaches(){
-      this.loadCoaches
+    async loadCoaches(){
+      this.isLoading = true
+      try {
+
+        await this.loadCoaches
+      } catch (error) {
+        this.error = error.message || 'Something was wrong'
+      }
+      this.isLoading = false
+      console.log(this.isLoading)
     }
 
   },
@@ -60,7 +80,7 @@ export default {
       coaches: 'coaches/coachesGetter',
       checkCoach: 'coaches/hasCoaches',
       isCoach: 'coaches/isCoach'
-      
+
     }),
     filteredCoaches() {
       const coach = this.coaches
@@ -72,7 +92,7 @@ export default {
       })
     },
     hasCoach() {
-      return this.checkCoach;
+      return !this.isLoading && this.checkCoach;
     },
     coachVerify() {
       return this.isCoach;

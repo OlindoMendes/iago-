@@ -28,6 +28,14 @@ export default {
     hasRequest(){
       return this.haveRequest
     }
+  },
+  methods:{
+    ...mapActions({
+      loadRequest: 'requests.fetchRequests'
+    }),
+    loadRequests(){
+      this.loadRequest
+    }
   }
 }
 </script>
